@@ -1,0 +1,689 @@
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+  text-align: left;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: #ffffff;
+}
+
+/* ============================================================
+   LAYOUT WRAPPER — sidebar + contenu
+============================================================ */
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ============================================================
+   LAYOUT — zone de contenu principale
+============================================================ */
+.dashboard-layout {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+  display: flex;
+  background-color: #f1f6fa;
+  flex-direction: column;
+  padding-bottom: 40px;
+  overflow-x: hidden;
+}
+
+.dashboard-layout > *:not(.dashboard-header) + *:not(.dashboard-header) {
+  margin-top: 20px;
+}
+
+/* Autres pages qui partagent la meme structure */
+.revision-layout,
+.notes-root,
+.progress-layout,
+.page-root,
+.pp-page {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   HEADER — <header className="dashboard-header">
+============================================================ */
+.dashboard-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 0 28px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.dashboard-header-left {
+  display: flex;
+  align-items: center;
+}
+
+/* <h1 className="dashboard-title"> */
+.dashboard-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1c20;
+  letter-spacing: -0.3px;
+}
+
+/* ============================================================
+   DROPDOWN — <div className="dropdown-container">
+============================================================ */
+.dropdown-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* <button className="dashboard-badge"> */
+.dashboard-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  color:#1a1c20;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.dashboard-badge:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* <div className="dropdown-menu"> */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 220px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px -8px rgba(15,23,42,0.15), 0 4px 12px rgba(0,0,0,0.06);
+  border: 1px solid #e8edf5;
+  z-index: 200;
+  overflow: hidden;
+}
+
+/* <div className="dropdown-item"> */
+.dropdown-item { cursor: pointer; }
+
+/* <div className="semester-label"> */
+.semester-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #1a1c20;
+  padding: 12px 16px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* <div className="phase-row"> */
+.phase-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #334155;
+  transition: background 0.15s;
+}
+
+.phase-row:hover { background: #f8fafc; }
+
+.dropdown-item.active .phase-row {
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* ============================================================
+   BANNER — <div className="dashboard-banner-wrap">
+   Enfants : .dashboard-banner-text, .dashboard-banner-badges
+============================================================ */
+.dashboard-banner-wrap {
+  /* Inséré directement dans .dashboard-layout → pas de padding propre, on met margin */
+  margin: 0 28px;
+  background: linear-gradient(135deg, #2563eb 40%, #ffffff00 80%);
+  border-radius: 20px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 14px 40px -8px rgba(79,70,229,0.35);
+}
+
+.dashboard-banner-wrap::before {
+  content: "";
+  position: absolute;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  top: -80px; right: -50px;
+  pointer-events: none;
+}
+
+.dashboard-banner-wrap::after {
+  content: "";
+  position: absolute;
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  bottom: -55px; left: 30%;
+  pointer-events: none;
+}
+
+.dashboard-banner-text {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;        /* espacement titre → sous-titre → badges */
+  padding: 24px 0;
+}
+
+.dashboard-banner-badges {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 8px 14px;
+  width: fit-content;   /* ← ne prend que la largeur nécessaire */
+  flex-wrap: nowrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* <h2 className="dashboard-banner-title"> */
+.dashboard-banner-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 4px;
+}
+
+/* <p className="dashboard-banner-sub"> */
+.dashboard-banner-sub {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.78);
+  margin: 0;
+}
+
+/* <div className="db-badge-item"> */
+.db-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* <span className="db-badge-label"> */
+.db-badge-label {
+  font-size: 9.5px;
+  color: rgba(255,255,255,0.62);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* <span className="db-badge-value"> */
+.db-badge-value {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: -0.2px;
+}
+
+/* <div className="db-badge-divider"> */
+.db-badge-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   STATS GRID — <div className="dc-stats-grid">
+   Inséré directement dans .dashboard-layout
+============================================================ */
+.dc-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 28px;
+}
+
+@media (max-width: 1200px) {
+  .dc-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .dc-stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   STAT CARD — <div className="dc-stat-card">
+   Enfants : .dc-stat-icon, .dc-stat-body
+============================================================ */
+.dc-stat-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #e8edf5;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.dc-stat-card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #818cf8);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border-radius: 16px 16px 0 0;
+}
+
+.dc-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  border-color: #dde4f0;
+}
+
+.dc-stat-card:hover::after { opacity: 1; }
+
+/* <div className="dc-stat-icon"> — couleur passée en inline style depuis JSX */
+.dc-stat-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* <div className="dc-stat-body"> */
+.dc-stat-body {
+  min-width: 0;
+}
+
+/* <div className="dc-stat-value"> */
+.dc-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+/* <div className="dc-stat-label"> */
+.dc-stat-label {
+  font-size: 12.5px;
+  color: #64748b;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* <div className="dc-stat-subtitle"> */
+.dc-stat-subtitle {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 3px;
+}
+
+/* ============================================================
+   TWO COLUMNS — <div className="dc-two-columns">
+============================================================ */
+.dc-two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 28px;
+}
+
+@media (max-width: 900px) {
+  .dc-two-columns { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   CARD — <div className="dc-card">
+============================================================ */
+.dc-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e8edf5;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  animation: fadeInUp 0.3s ease both;
+}
+
+.dc-card:hover {
+  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+}
+
+/* <div className="dc-card-header"> */
+.dc-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* <span className="dc-badge"> */
+.dc-badge {
+  margin-left: auto;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   TÂCHES — <div className="dc-task-list">
+============================================================ */
+.dc-task-list { padding: 4px 0; }
+
+/* <div className="dc-task-item"> */
+.dc-task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: #374151;
+  border-bottom: 1px solid #f8fafc;
+  transition: background 0.15s;
+}
+
+.dc-task-item:hover { background: #f8fafc; }
+.dc-task-item:last-child { border-bottom: none; }
+
+/* <div className="dc-task-item dc-task-done"> */
+.dc-task-item.dc-task-done { opacity: 0.42; }
+.dc-task-item.dc-task-done .dc-task-text { text-decoration: line-through; }
+
+/* <span className="dc-task-dot"> */
+.dc-task-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  flex-shrink: 0;
+}
+
+/* <span className="dc-task-dot done"> */
+.dc-task-dot.done {
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+}
+
+/* <span className="dc-task-text"> */
+.dc-task-text { flex: 1; font-weight: 500; font-size: 13px; }
+
+/* <span className="dc-task-time"> */
+.dc-task-time {
+  font-size: 11px;
+  color: #94a3b8;
+  background: #f8fafc;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   MODULES — <div className="dc-modules-list">
+============================================================ */
+.dc-modules-list {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* <div className="dc-module-row"> */
+.dc-module-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* <div className="dc-module-info"> */
+.dc-module-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 115px;
+  flex-shrink: 0;
+}
+
+/* <span className="dc-module-dot"> — couleur via inline style */
+.dc-module-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* <span className="dc-module-name"> */
+.dc-module-name {
+  font-size: 12px;
+  color: #374151;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* <div className="dc-progress-bar-wrap"> */
+.dc-progress-bar-wrap {
+  flex: 1;
+  height: 7px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* <div className="dc-progress-bar-fill"> — width + background via inline style */
+.dc-progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* <span className="dc-module-pct"> */
+.dc-module-pct {
+  font-size: 11px;
+  color: #64748b;
+  width: 30px;
+  text-align: right;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   ÉTATS — loading / error / empty
+============================================================ */
+.dc-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748b;
+  font-size: 13.5px;
+  padding: 24px 28px;
+}
+
+.dc-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 28px;
+}
+
+.dc-empty {
+  padding: 32px 20px;
+  color: #94a3b8;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ============================================================
+   ANIMATIONS
+============================================================ */
+@keyframes dc-spin { to { transform: rotate(360deg); } }
+.dc-spin { animation: dc-spin 0.85s linear infinite; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dc-stat-card { animation: fadeInUp 0.28s ease both; }
+.dc-stat-card:nth-child(2) { animation-delay: 0.05s; }
+.dc-stat-card:nth-child(3) { animation-delay: 0.10s; }
+.dc-stat-card:nth-child(4) { animation-delay: 0.15s; }
+
+/* ============================================================
+   QUICK NAV — <div className="dc-quicknav">
+============================================================ */
+.dc-quicknav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 28px;
+}
+
+/* <div className="dc-quicknav-card"> */
+.dc-quicknav-card {
+  flex: 1;
+  min-width: 150px;
+  background: #ffffff;
+  border-radius: 13px;
+  border: 1px solid #e8edf5;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.dc-quicknav-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+/* <div className="dc-quicknav-body"> */
+.dc-quicknav-body { min-width: 0; }
+
+/* <div className="dc-quicknav-dot"> */
+.dc-quicknav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* <div className="dc-quicknav-name"> */
+.dc-quicknav-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* <div className="dc-quicknav-progress"> */
+.dc-quicknav-progress {
+  font-size: 11.5px;
+  color: #64748b;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* ============================================================
+   SCROLLBAR
+============================================================ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+.dashboard-banner-img {
+  height: 180px;
+  width: auto;
+  object-fit: contain;
+  object-position: bottom;
+  align-self: flex-end;
+  flex-shrink: 0;
+  filter: drop-shadow(0 -4px 16px rgba(0,0,0,0.12));
+  position: relative;
+  z-index: 1;
+  margin-bottom: -2px; /* colle à la bordure basse de la banner */
+}
+
+/* Sur petits écrans, on la cache pour ne pas écraser le texte */
+@media (max-width: 900px) {
+  .dashboard-banner-img { display: none; }
+}

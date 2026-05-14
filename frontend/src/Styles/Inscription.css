@@ -1,0 +1,232 @@
+/* Variables */
+:root {
+  --blue-primary: #3b82f6;
+  --blue-hover: #1a70fb;
+  --blue-light: #eff5ff;
+  --text-dark: #1a1a2e;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --bg-page: #f0f4f8;
+  --bg-card: #ffffff;
+  --input-bg: #ffffff;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --radius-card: 20px;
+  --radius-input: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-wrapper {
+  min-height: 100vh;
+  background-color: var(--bg-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+.auth-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 40px 44px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-logo {
+  width: 64px;
+  height: 64px;
+  background-color: var(--blue-light);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.auth-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.auth-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.field-group {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.field-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  text-align: left;   /* ← ajouter/changer ça */
+  display: block;     /* ← important pour que text-align fonctionne */
+  /* ... vos autres styles existants */
+
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 13px 14px 13px 44px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-input);
+  background: var(--input-bg);
+  font-size: 14px;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-input::placeholder {
+  color: #b0b7c3;
+}
+
+/* ✅ ERREUR 1 CORRIGÉE — accolade fermante } manquante */
+.auth-input:focus {
+  border-color: var(--blue-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* ✅ ERREUR 2 CORRIGÉE — transition cassée sur 2 lignes */
+.btn-Inscrip-primary {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  background-color: var(--blue-primary);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  letter-spacing: 0.3px;
+}
+
+/* ✅ ERREUR 3 CORRIGÉE — accolade fermante } manquante */
+.btn-Inscrip-primary:hover {
+  background-color: var(--blue-hover);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+}
+
+.btn-Inscrip-primary:active {
+  transform: scale(0.98);
+}
+
+.auth-redirect {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.auth-link {
+  color: var(--blue-primary);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.auth-link:hover {
+  color: var(--blue-hover);
+  text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  .auth-card {
+    padding: 30px 24px;
+  }
+}
+.forgot-password-link {
+  display: block;
+  text-align: right;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #3b82f6;
+  cursor: pointer;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid white;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  display: block;
+  margin: auto; /* centre dans le bouton */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.auth-message {
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+.auth-message.success {
+  color: #0c7733;
+  background-color: #cbf6d8;
+  border: 1px solid #34bb63;
+}
+.auth-message.error {
+  color: #dc2626;
+  background-color: #fadfdf;
+  border: 0px solid #ef1d1d;
+}
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top:7px;
+  cursor: pointer;
+  font-size: 18px;
+}
